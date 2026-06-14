@@ -1,0 +1,84 @@
+[
+  {
+    "order_id": "ORD-001",
+    "customer_zip": "10014",
+    "mail_order": false,
+    "items": [
+      { "product_code": "WC-STD-001", "quantity": 1 },
+      { "product_code": "OX-PORT-024", "quantity": 1 }
+    ],
+    "notes": "Local routing — wheelchair and oxygen at a New York ZIP. Single-supplier consolidation expected."
+  },
+  {
+    "order_id": "ORD-002",
+    "customer_zip": "77059",
+    "mail_order": false,
+    "items": [
+      { "product_code": "HB-FUL-018", "quantity": 1 },
+      { "product_code": "PL-ELEC-043", "quantity": 1 },
+      { "product_code": "CM-BED-048", "quantity": 1 },
+      { "product_code": "BP-AUTO-077", "quantity": 1 }
+    ],
+    "priority": "rush",
+    "notes": "Four categories at ZIP 77059 — exercises multi-category greedy consolidation across hospital bed, patient lift, commode, and blood pressure monitor."
+  },
+  {
+    "order_id": "ORD-003",
+    "customer_zip": "02130",
+    "mail_order": true,
+    "items": [
+      { "product_code": "CP-STD-031", "quantity": 1 },
+      { "product_code": "CP-MSK-FF-035", "quantity": 2 },
+      { "product_code": "NB-COMP-039", "quantity": 1 }
+    ],
+    "notes": "Respiratory order with mail_order enabled. Two CPAP items share a category — the greedy algorithm consolidates CPAP and nebulizer to whichever supplier covers both."
+  },
+  {
+    "order_id": "ORD-004",
+    "customer_zip": "10001",
+    "mail_order": true,
+    "allow_partial": false,
+    "items": [
+      { "product_code": "FAKE-PROD-001", "quantity": 1 },
+      { "product_code": "FAKE-PROD-002", "quantity": 1 }
+    ],
+    "notes": "Both product codes are unknown (not in products.csv). Expects feasible: false with two 'Unknown product' errors and no routing."
+  },
+  {
+    "order_id": "ORD-005",
+    "customer_zip": "10001",
+    "mail_order": true,
+    "allow_partial": false,
+    "items": [
+      { "product_code": "WC-STD-001", "quantity": 1 },
+      { "product_code": "FAKE-PROD-003", "quantity": 1 }
+    ],
+    "notes": "One valid product and one unknown, allow_partial: false. The unknown code triggers an immediate infeasible return — the valid wheelchair item is not routed. Expects feasible: false with one error for the unknown code only."
+  },
+  {
+    "order_id": "ORD-006",
+    "customer_zip": "10001",
+    "mail_order": true,
+    "allow_partial": true,
+    "items": [
+      { "product_code": "WC-STD-001", "quantity": 1 },
+      { "product_code": "FAKE-PROD-004", "quantity": 1 }
+    ],
+    "notes": "Same mix as ORD-005 but with allow_partial: true. The valid wheelchair item is routed. The unknown product code produces an 'Unknown product' error regardless of allow_partial. Expects feasible: false with routing for the wheelchair and an 'Unknown product' error for the unknown code."
+  },
+  {
+    "order_id": "ORD-007",
+    "customer_zip": "30301",
+    "mail_order": true,
+    "items": [
+      { "product_code": "WC-STD-001", "quantity": 1 },
+      { "product_code": "WK-STD-009", "quantity": 1 },
+      { "product_code": "CP-STD-031", "quantity": 1 },
+      { "product_code": "HB-FUL-018", "quantity": 1 },
+      { "product_code": "AB-LACE-094", "quantity": 1 },
+      { "product_code": "BB-LUM-090", "quantity": 1 },
+      { "product_code": "NB-COMP-039", "quantity": 1 }
+    ],
+    "notes": "Seven products across seven different categories. Intended to exercise multi-supplier routing: in a restricted catalogue, no single supplier carries all these categories and the greedy algorithm would split the order across 2+ suppliers. With the current dataset, broad-coverage national suppliers cover all 24 product categories, so the greedy algorithm consolidates the entire order to a single supplier. Multi-supplier routing is best validated through unit tests with controlled mock eligibility data."
+  }
+]

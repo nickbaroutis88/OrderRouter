@@ -1,0 +1,14 @@
+**/.vs
+**/.vscode
+**/.git
+**/.gitignore
+**/bin
+**/obj
+**/node_modules
+**/*.user
+**/*.db
+**/*Tests*/
+docker-compose*.yml
+Dockerfile*
+README*
+LICENSE

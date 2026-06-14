@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="OrderRouter.Api/OrderRouter.Api.csproj" />
+  <Project Path="OrderRouter.Services.Tests/OrderRouter.Services.Tests.csproj" />
+  <Project Path="OrderRouter.Services/OrderRouter.Services.csproj" />
+</Solution>
