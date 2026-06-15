@@ -25,7 +25,7 @@ public class DatabaseSeeder(
 
         if (!suppliersEmpty && !productsEmpty)
         {
-            logger.LogInformation("Database is already seeded — skipping.");
+            logger.LogDebug("Database is already seeded — skipping.");
             return;
         }
 
@@ -78,7 +78,7 @@ public class DatabaseSeeder(
         try
         {
             await context.SaveChangesAsync(cancellationToken);
-            logger.LogInformation("Seeded {Count} suppliers.", suppliers.Count);
+            logger.LogDebug("Seeded {Count} suppliers.", suppliers.Count);
         }
         catch (Exception ex)
         {
