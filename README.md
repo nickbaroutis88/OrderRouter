@@ -118,7 +118,7 @@ Swagger UI for interactive exploration.
 | `ORD-003` | Respiratory order with `mail_order: true` — CPAP + nebulizer | `feasible: true`, mail-order supplier |
 | `ORD-004` | Two unknown product codes, `allow_partial: false` | `feasible: false`, two `Unknown product` errors |
 | `ORD-005` | One valid + one unknown, `allow_partial: false` | `feasible: false`, one `Unknown product` error, valid item not routed |
-| `ORD-006` | One valid + one unknown, `allow_partial: true` | `feasible: false`, valid item routed, unknown reports `No supplier can fulfill` |
+| `ORD-006` | One valid + one unknown, `allow_partial: true` | `feasible: false`, valid item routed, unknown reports `Unknown product` |
 | `ORD-007` | Seven categories, designed for multi-supplier stress test | `feasible: true`, single supplier (see note below) |
 
 **Note on multi-supplier routing**: The current supplier dataset includes national suppliers (e.g. SUP-0460) that cover all 24 product categories with `serves_all_zips: true`. The greedy algorithm will always find one supplier that covers every requested product, so multi-supplier routing never occurs with this data. To validate multi-supplier splitting, use unit tests with controlled mock eligibility data.
@@ -146,7 +146,7 @@ dotnet test
 ```
 OrderRouter.Api          — ASP.NET Core web host, controller, health checks
 OrderRouter.Services     — Business logic, EF Core DbContext, CSV seeding
-OrderRouter.Services.Tests — Unit and integration tests
+OrderRouter.Services.Tests — Unit tests
 ```
 
 **Routing algorithm** — Greedy set cover: at each step, pick the supplier that covers the most remaining unassigned products. Tie-breaks favour higher satisfaction scores; among equal scores, local suppliers are preferred over mail-order.
